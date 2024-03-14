@@ -7,18 +7,22 @@ function test(id) {
     element.value = element.value.replace(regex, "");
 }
 
+document.getElementById("team").addEventListener("keypress",(e) => {
+    if (e.key === "Enter") displayData();
+});
+
 async function displayData() {
     let element = document.getElementById("team");
-    let response = await fetch(`./data/${element.value}.json`);
-    if (response.status === 404) {
-        document.getElementById("name").textContent = "Team doesn't exists!";
-        document.getElementById("ready").textContent = ``;
-    } else {
-        let data = await response.json();
-        document.getElementById("name").textContent = `Name: ${data.name}`;
-        document.getElementById("ready").textContent = `Robot ready?: ${data.robot}`;
+    let data = await fetchData(element.value);
+    console.log(data);
+    if(element.value == ""){
+        document.getElementById("info").innerHTML = `Please provide a team number!`;
     }
-    fetchData(element.value);
+    else if(data && data.Error){
+        document.getElementById("info").innerHTML = `There was an error fetching data! or Team does not exist!`;
+    } else{
+        document.getElementById("info").innerHTML = `Name: ${data.nickname ? data.nickname : "N/A"}<br><br>Team number: ${data.team_number ? data.team_number : "N/A"}<br><br>State: ${data.state_prov ? data.state_prov : "N/A"}<br><br>City: ${data.city ? data.city : "N/A"}<br><br>School name: ${data.school_name ? data.school_name : "N/A"}<br><br>Rookie year: ${data.rookie_year ? data.rookie_year : "N/A"}<br><br>Website: <a href="${data.website ? data.website : "N/A"}" target="_blank">${data.website ? data.website : "N/A"}</a>`;
+    }
 }
 
 async function fetchData(team){
@@ -48,14 +52,13 @@ async function fetchData(team){
         while(!response.ok){
             try{
                 response = await fetch(url_start + "frc" + team + url_end + key)
-                const jsonData = await response.json();
-                console.log(jsonData)
-                break
+                return await response.json();
             }
-            catch{
-                console.log('TBA API busy, retrying...')
+            catch(error){
+                console.log(error)
+                return
             }
         }
     }
-    getData()
+    return getData()
 }
