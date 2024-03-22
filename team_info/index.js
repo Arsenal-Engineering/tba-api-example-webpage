@@ -26,7 +26,7 @@ async function displayData() {
 }
 
 async function fetchData(team){
-    const key_path = './var/tba-read-key.json';
+    const key_path = '../var/tba-read-key.json';
     const default_key = '2024mndu';
     const default_team = 'frc1732';
     const url_start = 'https://www.thebluealliance.com/api/v3/team/';
