@@ -31,9 +31,11 @@ async function displayData() {
 			data.school_name ? data.school_name : "N/A"
 		}<br><br>Rookie year: ${
 			data.rookie_year ? data.rookie_year : "N/A"
-		}<br><br>Website: <a href="${
-			data.website ? data.website : "N/A"
-		}" target="_blank">${data.website ? data.website : "N/A"}</a>`;
+		}<br><br>Website: ${
+			data.website
+				? `<a href=${data.website} target="_blank">${data.website}</a>`
+				: "N/A"
+		}`;
 	}
 }
 
