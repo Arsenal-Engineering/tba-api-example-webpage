@@ -5,6 +5,7 @@ function test(id) {
         element.value = element.value.substring(0, 4);
     }
     element.value = element.value.replace(regex, "");
+    displayData()
 }
 
 document.getElementById("team").addEventListener("keypress",(e) => {
@@ -19,7 +20,7 @@ async function displayData() {
         document.getElementById("info").innerHTML = `Please provide a team number!`;
     }
     else if(data && data.Error){
-        document.getElementById("info").innerHTML = `There was an error fetching data! or Team does not exist!`;
+        document.getElementById("info").innerHTML = `Error: Team does not exist!`;
     } else{
         document.getElementById("info").innerHTML = `Name: ${data.nickname ? data.nickname : "N/A"}<br><br>Team number: ${data.team_number ? data.team_number : "N/A"}<br><br>State: ${data.state_prov ? data.state_prov : "N/A"}<br><br>City: ${data.city ? data.city : "N/A"}<br><br>School name: ${data.school_name ? data.school_name : "N/A"}<br><br>Rookie year: ${data.rookie_year ? data.rookie_year : "N/A"}<br><br>Website: <a href="${data.website ? data.website : "N/A"}" target="_blank">${data.website ? data.website : "N/A"}</a>`;
     }
